@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"github.com/xh-polaris/meowchat-collection-rpc/errorx"
 	"strconv"
 
 	"github.com/xh-polaris/meowchat-collection-rpc/internal/svc"
@@ -27,13 +28,13 @@ func NewGetCatLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetCatLogi
 // int64, err := strconv.ParseInt(string, 10, 64)
 func (l *GetCatLogic) GetCat(in *pb.GetCatReq) (*pb.GetCatResp, error) {
 	// todo: add your logic here and delete this line
-	id, err := strconv.ParseInt(in.CommunityId, 10, 64)
+	id, err := strconv.ParseInt(in.CatId, 10, 64)
 	if err != nil {
 		return nil, err
 	}
-	conn, err := l.svcCtx.CatModel.FindOne(l.ctx, id)
-	if conn.DeleteAt > conn.CreateAt {
-
+	conn, err := l.svcCtx.CatModel.FindOneNotDelete(l.ctx, id)
+	if err != nil {
+		return nil, errorx.NoSuchCat
 	}
-	return &pb.GetCatResp{}, nil
+	return &pb.GetCatResp{Cat: svc.TransformPdCat(conn)}, nil
 }

@@ -24,6 +24,7 @@ message Cat {
 message GetManyCatReq {
   string communityId = 1;
   int64 count = 2; // 获取的数量
+  int64 skip=3;//跳过前skip个
 }
 
 message GetManyCatResp {
@@ -31,7 +32,7 @@ message GetManyCatResp {
 }
 
 message GetCatReq {
-  string communityId = 1;
+  string catId = 1;
 }
 
 message GetCatResp {
@@ -60,7 +61,7 @@ message DeleteCatReq {
 message DeleteCatResp {
 }
 
-service cat {
+service CatRpc{
   rpc GetManyCat(GetManyCatReq) returns (GetManyCatResp);
   rpc GetCat(GetCatReq) returns (GetCatResp);
   rpc AddCat(AddCatReq) returns (AddCatResp);
