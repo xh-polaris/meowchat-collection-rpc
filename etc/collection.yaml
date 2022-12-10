@@ -2,7 +2,7 @@ Name: collection.rpc
 ListenOn: 0.0.0.0:8080
 
 Mysql:
-  Datasource: "root:123456@tcp(101.34.31.111:3306)/meowchat_collection_rpc?parseTime=true"
+  Datasource:
 CacheRedis:
-  - Host: 101.34.31.111:6379
+  - Host:
     Type: node
