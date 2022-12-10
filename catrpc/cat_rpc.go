@@ -5,24 +5,25 @@ package catrpc
 
 import (
 	"context"
-	pb2 "github.com/xh-polaris/meowchat-collection-rpc/pb"
+
+	"github.com/xh-polaris/meowchat-collection-rpc/pb"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
 )
 
 type (
-	AddCatReq      = pb2.AddCatReq
-	AddCatResp     = pb2.AddCatResp
-	Cat            = pb2.Cat
-	DeleteCatReq   = pb2.DeleteCatReq
-	DeleteCatResp  = pb2.DeleteCatResp
-	GetCatReq      = pb2.GetCatReq
-	GetCatResp     = pb2.GetCatResp
-	GetManyCatReq  = pb2.GetManyCatReq
-	GetManyCatResp = pb2.GetManyCatResp
-	UpdateCatReq   = pb2.UpdateCatReq
-	UpdateCatResp  = pb2.UpdateCatResp
+	AddCatReq      = pb.AddCatReq
+	AddCatResp     = pb.AddCatResp
+	Cat            = pb.Cat
+	DeleteCatReq   = pb.DeleteCatReq
+	DeleteCatResp  = pb.DeleteCatResp
+	GetCatReq      = pb.GetCatReq
+	GetCatResp     = pb.GetCatResp
+	GetManyCatReq  = pb.GetManyCatReq
+	GetManyCatResp = pb.GetManyCatResp
+	UpdateCatReq   = pb.UpdateCatReq
+	UpdateCatResp  = pb.UpdateCatResp
 
 	CatRpc interface {
 		GetManyCat(ctx context.Context, in *GetManyCatReq, opts ...grpc.CallOption) (*GetManyCatResp, error)
@@ -44,26 +45,26 @@ func NewCatRpc(cli zrpc.Client) CatRpc {
 }
 
 func (m *defaultCatRpc) GetManyCat(ctx context.Context, in *GetManyCatReq, opts ...grpc.CallOption) (*GetManyCatResp, error) {
-	client := pb2.NewCatRpcClient(m.cli.Conn())
+	client := pb.NewCatRpcClient(m.cli.Conn())
 	return client.GetManyCat(ctx, in, opts...)
 }
 
 func (m *defaultCatRpc) GetCat(ctx context.Context, in *GetCatReq, opts ...grpc.CallOption) (*GetCatResp, error) {
-	client := pb2.NewCatRpcClient(m.cli.Conn())
+	client := pb.NewCatRpcClient(m.cli.Conn())
 	return client.GetCat(ctx, in, opts...)
 }
 
 func (m *defaultCatRpc) AddCat(ctx context.Context, in *AddCatReq, opts ...grpc.CallOption) (*AddCatResp, error) {
-	client := pb2.NewCatRpcClient(m.cli.Conn())
+	client := pb.NewCatRpcClient(m.cli.Conn())
 	return client.AddCat(ctx, in, opts...)
 }
 
 func (m *defaultCatRpc) UpdateCat(ctx context.Context, in *UpdateCatReq, opts ...grpc.CallOption) (*UpdateCatResp, error) {
-	client := pb2.NewCatRpcClient(m.cli.Conn())
+	client := pb.NewCatRpcClient(m.cli.Conn())
 	return client.UpdateCat(ctx, in, opts...)
 }
 
 func (m *defaultCatRpc) DeleteCat(ctx context.Context, in *DeleteCatReq, opts ...grpc.CallOption) (*DeleteCatResp, error) {
-	client := pb2.NewCatRpcClient(m.cli.Conn())
+	client := pb.NewCatRpcClient(m.cli.Conn())
 	return client.DeleteCat(ctx, in, opts...)
 }

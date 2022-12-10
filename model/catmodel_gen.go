@@ -19,8 +19,8 @@ import (
 var (
 	catFieldNames          = builder.RawFieldNames(&Cat{})
 	catRows                = strings.Join(catFieldNames, ",")
-	catRowsExpectAutoSet   = strings.Join(stringx.Remove(catFieldNames, "`id`", "`created_at`", "`create_time`", "`update_at`", "`updated_at`", "`update_time`", "`create_at`"), ",")
-	catRowsWithPlaceHolder = strings.Join(stringx.Remove(catFieldNames, "`id`", "`created_at`", "`create_time`", "`update_at`", "`updated_at`", "`update_time`", "`create_at`"), "=?,") + "=?"
+	catRowsExpectAutoSet   = strings.Join(stringx.Remove(catFieldNames, "`id`", "`create_time`", "`update_at`", "`updated_at`", "`update_time`", "`create_at`", "`created_at`"), ",")
+	catRowsWithPlaceHolder = strings.Join(stringx.Remove(catFieldNames, "`id`", "`create_time`", "`update_at`", "`updated_at`", "`update_time`", "`create_at`", "`created_at`"), "=?,") + "=?"
 
 	cacheMeowchatCollectionRpcCatIdPrefix = "cache:meowchatCollectionRpc:cat:id:"
 )
@@ -40,7 +40,7 @@ type (
 
 	Cat struct {
 		Id           int64     `db:"id"`
-		CreateAt     time.Time `db:"create_at"`
+		CreateAt     time.Time `db:"create_at"` // 创建时间
 		DeleteAt     time.Time `db:"delete_at"`
 		Age          string    `db:"age"`
 		CommunityId  string    `db:"community_id"`
@@ -54,6 +54,7 @@ type (
 		IsSnipped    int64     `db:"is_snipped"`
 		IsSterilized int64     `db:"is_sterilized"`
 		IsDelete     int64     `db:"is_delete"`
+		Avatars      string    `db:"avatars"` // 图片
 	}
 )
 
@@ -93,8 +94,8 @@ func (m *defaultCatModel) FindOne(ctx context.Context, id int64) (*Cat, error) {
 func (m *defaultCatModel) Insert(ctx context.Context, data *Cat) (sql.Result, error) {
 	meowchatCollectionRpcCatIdKey := fmt.Sprintf("%s%v", cacheMeowchatCollectionRpcCatIdPrefix, data.Id)
 	ret, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, catRowsExpectAutoSet)
-		return conn.ExecCtx(ctx, query, data.DeleteAt, data.Age, data.CommunityId, data.Color, data.Details, data.Name, data.Popularity, data.Sex, data.Status, data.Area, data.IsSnipped, data.IsSterilized, data.IsDelete)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, catRowsExpectAutoSet)
+		return conn.ExecCtx(ctx, query, data.DeleteAt, data.Age, data.CommunityId, data.Color, data.Details, data.Name, data.Popularity, data.Sex, data.Status, data.Area, data.IsSnipped, data.IsSterilized, data.IsDelete, data.Avatars)
 	}, meowchatCollectionRpcCatIdKey)
 	return ret, err
 }
@@ -103,7 +104,7 @@ func (m *defaultCatModel) Update(ctx context.Context, data *Cat) error {
 	meowchatCollectionRpcCatIdKey := fmt.Sprintf("%s%v", cacheMeowchatCollectionRpcCatIdPrefix, data.Id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, catRowsWithPlaceHolder)
-		return conn.ExecCtx(ctx, query, data.DeleteAt, data.Age, data.CommunityId, data.Color, data.Details, data.Name, data.Popularity, data.Sex, data.Status, data.Area, data.IsSnipped, data.IsSterilized, data.IsDelete, data.Id)
+		return conn.ExecCtx(ctx, query, data.DeleteAt, data.Age, data.CommunityId, data.Color, data.Details, data.Name, data.Popularity, data.Sex, data.Status, data.Area, data.IsSnipped, data.IsSterilized, data.IsDelete, data.Avatars, data.Id)
 	}, meowchatCollectionRpcCatIdKey)
 	return err
 }

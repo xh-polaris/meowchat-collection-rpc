@@ -3,11 +3,9 @@ package logic
 import (
 	"context"
 	"github.com/xh-polaris/meowchat-collection-rpc/internal/svc"
-	"github.com/xh-polaris/meowchat-collection-rpc/model"
 	"github.com/xh-polaris/meowchat-collection-rpc/pb"
-	"strconv"
-
 	"github.com/zeromicro/go-zero/core/logx"
+	"strconv"
 )
 
 type AddCatLogic struct {
@@ -24,21 +22,7 @@ func NewAddCatLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddCatLogi
 	}
 }
 func (l *AddCatLogic) AddCat(in *pb.AddCatReq) (*pb.AddCatResp, error) {
-	// todo: add your logic here and delete this line
-	conn, err := l.svcCtx.CatModel.Insert(l.ctx, &model.Cat{
-		Age:          in.Cat.Age,
-		CommunityId:  in.Cat.CommunityId,
-		Color:        in.Cat.Color,
-		Details:      in.Cat.Details,
-		Name:         in.Cat.Name,
-		Popularity:   in.Cat.Popularity,
-		Sex:          in.Cat.Sex,
-		Status:       in.Cat.Status,
-		Area:         in.Cat.Area,
-		IsSnipped:    svc.BoolToInt(in.Cat.IsSnipped),
-		IsSterilized: svc.BoolToInt(in.Cat.IsSterilized),
-		IsDelete:     0,
-	})
+	conn, err := l.svcCtx.CatModel.Insert(l.ctx, TransformModelCat(in.Cat))
 	if err != nil {
 		return nil, err
 	}

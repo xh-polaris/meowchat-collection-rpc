@@ -5,15 +5,15 @@ package server
 
 import (
 	"context"
-	pb2 "github.com/xh-polaris/meowchat-collection-rpc/pb"
 
 	"github.com/xh-polaris/meowchat-collection-rpc/internal/logic"
 	"github.com/xh-polaris/meowchat-collection-rpc/internal/svc"
+	"github.com/xh-polaris/meowchat-collection-rpc/pb"
 )
 
 type CatRpcServer struct {
 	svcCtx *svc.ServiceContext
-	pb2.UnimplementedCatRpcServer
+	pb.UnimplementedCatRpcServer
 }
 
 func NewCatRpcServer(svcCtx *svc.ServiceContext) *CatRpcServer {
@@ -22,27 +22,27 @@ func NewCatRpcServer(svcCtx *svc.ServiceContext) *CatRpcServer {
 	}
 }
 
-func (s *CatRpcServer) GetManyCat(ctx context.Context, in *pb2.GetManyCatReq) (*pb2.GetManyCatResp, error) {
+func (s *CatRpcServer) GetManyCat(ctx context.Context, in *pb.GetManyCatReq) (*pb.GetManyCatResp, error) {
 	l := logic.NewGetManyCatLogic(ctx, s.svcCtx)
 	return l.GetManyCat(in)
 }
 
-func (s *CatRpcServer) GetCat(ctx context.Context, in *pb2.GetCatReq) (*pb2.GetCatResp, error) {
+func (s *CatRpcServer) GetCat(ctx context.Context, in *pb.GetCatReq) (*pb.GetCatResp, error) {
 	l := logic.NewGetCatLogic(ctx, s.svcCtx)
 	return l.GetCat(in)
 }
 
-func (s *CatRpcServer) AddCat(ctx context.Context, in *pb2.AddCatReq) (*pb2.AddCatResp, error) {
+func (s *CatRpcServer) AddCat(ctx context.Context, in *pb.AddCatReq) (*pb.AddCatResp, error) {
 	l := logic.NewAddCatLogic(ctx, s.svcCtx)
 	return l.AddCat(in)
 }
 
-func (s *CatRpcServer) UpdateCat(ctx context.Context, in *pb2.UpdateCatReq) (*pb2.UpdateCatResp, error) {
+func (s *CatRpcServer) UpdateCat(ctx context.Context, in *pb.UpdateCatReq) (*pb.UpdateCatResp, error) {
 	l := logic.NewUpdateCatLogic(ctx, s.svcCtx)
 	return l.UpdateCat(in)
 }
 
-func (s *CatRpcServer) DeleteCat(ctx context.Context, in *pb2.DeleteCatReq) (*pb2.DeleteCatResp, error) {
+func (s *CatRpcServer) DeleteCat(ctx context.Context, in *pb.DeleteCatReq) (*pb.DeleteCatResp, error) {
 	l := logic.NewDeleteCatLogic(ctx, s.svcCtx)
 	return l.DeleteCat(in)
 }

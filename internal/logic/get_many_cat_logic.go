@@ -2,8 +2,6 @@ package logic
 
 import (
 	"context"
-	"github.com/xh-polaris/meowchat-collection-rpc/errorx"
-
 	"github.com/xh-polaris/meowchat-collection-rpc/internal/svc"
 	"github.com/xh-polaris/meowchat-collection-rpc/pb"
 
@@ -25,14 +23,13 @@ func NewGetManyCatLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetMan
 }
 
 func (l *GetManyCatLogic) GetManyCat(in *pb.GetManyCatReq) (*pb.GetManyCatResp, error) {
-	// todo: add your logic here and delete this line
 	conn, err := l.svcCtx.CatModel.FindManyByCommunityIdNotDelete(l.ctx, in.CommunityId, in.Skip, in.Count)
 	if err != nil {
-		return nil, errorx.GetManyCatError
+		return nil, err
 	}
 	var Cat []*pb.Cat
-	for _, val := range *conn {
-		Cat = append(Cat, svc.TransformPdCat(&val))
+	for _, val := range conn {
+		Cat = append(Cat, TransformPbCat(val))
 	}
 	return &pb.GetManyCatResp{Cats: Cat}, nil
 }
