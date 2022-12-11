@@ -4,10 +4,12 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/xh-polaris/meowchat-collection-rpc/errorx"
+	"time"
+
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlc"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
-	"time"
 )
 
 var (
@@ -56,7 +58,7 @@ func (m *defaultCatModel) FindOneValid(ctx context.Context, id int64) (*Cat, err
 	case nil:
 		return &resp, nil
 	case sqlc.ErrNotFound:
-		return nil, ErrNotFound
+		return nil, errorx.ErrNoSuchCat
 	default:
 		return nil, err
 	}
@@ -69,8 +71,6 @@ func (m *defaultCatModel) FindManyValidByCommunityIdValid(ctx context.Context, C
 	switch err {
 	case nil:
 		return resp, nil
-	case sqlc.ErrNotFound:
-		return nil, ErrNotFound
 	default:
 		return nil, err
 	}
