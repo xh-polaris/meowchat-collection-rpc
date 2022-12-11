@@ -1,11 +1,12 @@
-package logic
+package common
 
 import (
 	"encoding/json"
-	"github.com/xh-polaris/meowchat-collection-rpc/model"
-	"github.com/xh-polaris/meowchat-collection-rpc/pb"
 	"strconv"
 	"time"
+
+	"github.com/xh-polaris/meowchat-collection-rpc/internal/model"
+	"github.com/xh-polaris/meowchat-collection-rpc/pb"
 )
 
 func BoolToInt(a bool) int64 {
@@ -21,11 +22,13 @@ func IntToBool(a int64) bool {
 	return false
 }
 
-// int64, err := strconv.ParseInt(string, 10, 64)
 func TransformPbCat(Cat *model.Cat) *pb.Cat {
 	id := strconv.FormatInt(Cat.Id, 10)
 	var s []string
-	json.Unmarshal([]byte(Cat.Avatars), &s)
+	err := json.Unmarshal([]byte(Cat.Avatars), &s)
+	if err != nil {
+		return nil
+	}
 	return &pb.Cat{
 		Id:           id,
 		CreateAt:     Cat.CreateAt.Unix(),
@@ -43,6 +46,7 @@ func TransformPbCat(Cat *model.Cat) *pb.Cat {
 		Avatars:      s,
 	}
 }
+
 func TransformModelCat(Cat *pb.Cat) *model.Cat {
 	id, _ := strconv.ParseInt(Cat.Id, 10, 64)
 	str, _ := json.Marshal(Cat.Avatars)

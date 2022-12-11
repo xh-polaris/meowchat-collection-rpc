@@ -2,6 +2,8 @@ package logic
 
 import (
 	"context"
+
+	. "github.com/xh-polaris/meowchat-collection-rpc/internal/common"
 	"github.com/xh-polaris/meowchat-collection-rpc/internal/svc"
 	"github.com/xh-polaris/meowchat-collection-rpc/pb"
 
@@ -22,7 +24,6 @@ func NewUpdateCatLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UpdateC
 	}
 }
 
-// int64, err := strconv.ParseInt(string, 10, 64)
 func (l *UpdateCatLogic) UpdateCat(in *pb.UpdateCatReq) (*pb.UpdateCatResp, error) {
 	err := l.svcCtx.CatModel.Update(l.ctx, TransformModelCat(in.Cat))
 	if err != nil {

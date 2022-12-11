@@ -28,7 +28,7 @@ func (l *DeleteCatLogic) DeleteCat(in *pb.DeleteCatReq) (*pb.DeleteCatResp, erro
 	if err != nil {
 		return nil, err
 	}
-	err = l.svcCtx.CatModel.DeleteNotDelete(l.ctx, id)
+	err = l.svcCtx.CatModel.DeleteSoftly(l.ctx, id)
 	if err != nil {
 		return nil, err
 	}

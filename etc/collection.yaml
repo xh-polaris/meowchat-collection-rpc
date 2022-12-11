@@ -1,8 +1,10 @@
 Name: collection.rpc
 ListenOn: 0.0.0.0:8080
-
+Mode: dev
+Log:
+  Encoding: plain
+  Level: debug
 Mysql:
-  Datasource:
+  Datasource: MYSQL_DATASOURCE
 CacheRedis:
-  - Host:
-    Type: node
+  - Host: $CACHE_HOST

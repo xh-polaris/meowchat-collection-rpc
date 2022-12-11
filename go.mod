@@ -3,7 +3,6 @@ module github.com/xh-polaris/meowchat-collection-rpc
 go 1.18
 
 require (
-	github.com/lib/pq v1.10.7
 	github.com/zeromicro/go-zero v1.4.2
 	google.golang.org/grpc v1.51.0
 	google.golang.org/protobuf v1.28.1

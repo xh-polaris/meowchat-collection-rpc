@@ -18,230 +18,230 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// CatRpcClient is the client API for CatRpc service.
+// CollectionRpcClient is the client API for CollectionRpc service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type CatRpcClient interface {
-	GetManyCat(ctx context.Context, in *GetManyCatReq, opts ...grpc.CallOption) (*GetManyCatResp, error)
-	GetCat(ctx context.Context, in *GetCatReq, opts ...grpc.CallOption) (*GetCatResp, error)
-	AddCat(ctx context.Context, in *AddCatReq, opts ...grpc.CallOption) (*AddCatResp, error)
+type CollectionRpcClient interface {
+	ListCat(ctx context.Context, in *ListCatReq, opts ...grpc.CallOption) (*ListCatResp, error)
+	RetrieveCat(ctx context.Context, in *RetrieveCatReq, opts ...grpc.CallOption) (*RetrieveCatResp, error)
+	CreateCat(ctx context.Context, in *CreateCatReq, opts ...grpc.CallOption) (*CreateCatResp, error)
 	UpdateCat(ctx context.Context, in *UpdateCatReq, opts ...grpc.CallOption) (*UpdateCatResp, error)
 	DeleteCat(ctx context.Context, in *DeleteCatReq, opts ...grpc.CallOption) (*DeleteCatResp, error)
 }
 
-type catRpcClient struct {
+type collectionRpcClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewCatRpcClient(cc grpc.ClientConnInterface) CatRpcClient {
-	return &catRpcClient{cc}
+func NewCollectionRpcClient(cc grpc.ClientConnInterface) CollectionRpcClient {
+	return &collectionRpcClient{cc}
 }
 
-func (c *catRpcClient) GetManyCat(ctx context.Context, in *GetManyCatReq, opts ...grpc.CallOption) (*GetManyCatResp, error) {
-	out := new(GetManyCatResp)
-	err := c.cc.Invoke(ctx, "/cat.CatRpc/GetManyCat", in, out, opts...)
+func (c *collectionRpcClient) ListCat(ctx context.Context, in *ListCatReq, opts ...grpc.CallOption) (*ListCatResp, error) {
+	out := new(ListCatResp)
+	err := c.cc.Invoke(ctx, "/cat.collection_rpc/ListCat", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *catRpcClient) GetCat(ctx context.Context, in *GetCatReq, opts ...grpc.CallOption) (*GetCatResp, error) {
-	out := new(GetCatResp)
-	err := c.cc.Invoke(ctx, "/cat.CatRpc/GetCat", in, out, opts...)
+func (c *collectionRpcClient) RetrieveCat(ctx context.Context, in *RetrieveCatReq, opts ...grpc.CallOption) (*RetrieveCatResp, error) {
+	out := new(RetrieveCatResp)
+	err := c.cc.Invoke(ctx, "/cat.collection_rpc/RetrieveCat", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *catRpcClient) AddCat(ctx context.Context, in *AddCatReq, opts ...grpc.CallOption) (*AddCatResp, error) {
-	out := new(AddCatResp)
-	err := c.cc.Invoke(ctx, "/cat.CatRpc/AddCat", in, out, opts...)
+func (c *collectionRpcClient) CreateCat(ctx context.Context, in *CreateCatReq, opts ...grpc.CallOption) (*CreateCatResp, error) {
+	out := new(CreateCatResp)
+	err := c.cc.Invoke(ctx, "/cat.collection_rpc/CreateCat", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *catRpcClient) UpdateCat(ctx context.Context, in *UpdateCatReq, opts ...grpc.CallOption) (*UpdateCatResp, error) {
+func (c *collectionRpcClient) UpdateCat(ctx context.Context, in *UpdateCatReq, opts ...grpc.CallOption) (*UpdateCatResp, error) {
 	out := new(UpdateCatResp)
-	err := c.cc.Invoke(ctx, "/cat.CatRpc/UpdateCat", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cat.collection_rpc/UpdateCat", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *catRpcClient) DeleteCat(ctx context.Context, in *DeleteCatReq, opts ...grpc.CallOption) (*DeleteCatResp, error) {
+func (c *collectionRpcClient) DeleteCat(ctx context.Context, in *DeleteCatReq, opts ...grpc.CallOption) (*DeleteCatResp, error) {
 	out := new(DeleteCatResp)
-	err := c.cc.Invoke(ctx, "/cat.CatRpc/DeleteCat", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/cat.collection_rpc/DeleteCat", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// CatRpcServer is the server API for CatRpc service.
-// All implementations must embed UnimplementedCatRpcServer
+// CollectionRpcServer is the server API for CollectionRpc service.
+// All implementations must embed UnimplementedCollectionRpcServer
 // for forward compatibility
-type CatRpcServer interface {
-	GetManyCat(context.Context, *GetManyCatReq) (*GetManyCatResp, error)
-	GetCat(context.Context, *GetCatReq) (*GetCatResp, error)
-	AddCat(context.Context, *AddCatReq) (*AddCatResp, error)
+type CollectionRpcServer interface {
+	ListCat(context.Context, *ListCatReq) (*ListCatResp, error)
+	RetrieveCat(context.Context, *RetrieveCatReq) (*RetrieveCatResp, error)
+	CreateCat(context.Context, *CreateCatReq) (*CreateCatResp, error)
 	UpdateCat(context.Context, *UpdateCatReq) (*UpdateCatResp, error)
 	DeleteCat(context.Context, *DeleteCatReq) (*DeleteCatResp, error)
-	mustEmbedUnimplementedCatRpcServer()
+	mustEmbedUnimplementedCollectionRpcServer()
 }
 
-// UnimplementedCatRpcServer must be embedded to have forward compatible implementations.
-type UnimplementedCatRpcServer struct {
+// UnimplementedCollectionRpcServer must be embedded to have forward compatible implementations.
+type UnimplementedCollectionRpcServer struct {
 }
 
-func (UnimplementedCatRpcServer) GetManyCat(context.Context, *GetManyCatReq) (*GetManyCatResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetManyCat not implemented")
+func (UnimplementedCollectionRpcServer) ListCat(context.Context, *ListCatReq) (*ListCatResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCat not implemented")
 }
-func (UnimplementedCatRpcServer) GetCat(context.Context, *GetCatReq) (*GetCatResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCat not implemented")
+func (UnimplementedCollectionRpcServer) RetrieveCat(context.Context, *RetrieveCatReq) (*RetrieveCatResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RetrieveCat not implemented")
 }
-func (UnimplementedCatRpcServer) AddCat(context.Context, *AddCatReq) (*AddCatResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddCat not implemented")
+func (UnimplementedCollectionRpcServer) CreateCat(context.Context, *CreateCatReq) (*CreateCatResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCat not implemented")
 }
-func (UnimplementedCatRpcServer) UpdateCat(context.Context, *UpdateCatReq) (*UpdateCatResp, error) {
+func (UnimplementedCollectionRpcServer) UpdateCat(context.Context, *UpdateCatReq) (*UpdateCatResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCat not implemented")
 }
-func (UnimplementedCatRpcServer) DeleteCat(context.Context, *DeleteCatReq) (*DeleteCatResp, error) {
+func (UnimplementedCollectionRpcServer) DeleteCat(context.Context, *DeleteCatReq) (*DeleteCatResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCat not implemented")
 }
-func (UnimplementedCatRpcServer) mustEmbedUnimplementedCatRpcServer() {}
+func (UnimplementedCollectionRpcServer) mustEmbedUnimplementedCollectionRpcServer() {}
 
-// UnsafeCatRpcServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to CatRpcServer will
+// UnsafeCollectionRpcServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to CollectionRpcServer will
 // result in compilation errors.
-type UnsafeCatRpcServer interface {
-	mustEmbedUnimplementedCatRpcServer()
+type UnsafeCollectionRpcServer interface {
+	mustEmbedUnimplementedCollectionRpcServer()
 }
 
-func RegisterCatRpcServer(s grpc.ServiceRegistrar, srv CatRpcServer) {
-	s.RegisterService(&CatRpc_ServiceDesc, srv)
+func RegisterCollectionRpcServer(s grpc.ServiceRegistrar, srv CollectionRpcServer) {
+	s.RegisterService(&CollectionRpc_ServiceDesc, srv)
 }
 
-func _CatRpc_GetManyCat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetManyCatReq)
+func _CollectionRpc_ListCat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCatReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CatRpcServer).GetManyCat(ctx, in)
+		return srv.(CollectionRpcServer).ListCat(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cat.CatRpc/GetManyCat",
+		FullMethod: "/cat.collection_rpc/ListCat",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CatRpcServer).GetManyCat(ctx, req.(*GetManyCatReq))
+		return srv.(CollectionRpcServer).ListCat(ctx, req.(*ListCatReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CatRpc_GetCat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetCatReq)
+func _CollectionRpc_RetrieveCat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RetrieveCatReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CatRpcServer).GetCat(ctx, in)
+		return srv.(CollectionRpcServer).RetrieveCat(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cat.CatRpc/GetCat",
+		FullMethod: "/cat.collection_rpc/RetrieveCat",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CatRpcServer).GetCat(ctx, req.(*GetCatReq))
+		return srv.(CollectionRpcServer).RetrieveCat(ctx, req.(*RetrieveCatReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CatRpc_AddCat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddCatReq)
+func _CollectionRpc_CreateCat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCatReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CatRpcServer).AddCat(ctx, in)
+		return srv.(CollectionRpcServer).CreateCat(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cat.CatRpc/AddCat",
+		FullMethod: "/cat.collection_rpc/CreateCat",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CatRpcServer).AddCat(ctx, req.(*AddCatReq))
+		return srv.(CollectionRpcServer).CreateCat(ctx, req.(*CreateCatReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CatRpc_UpdateCat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CollectionRpc_UpdateCat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateCatReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CatRpcServer).UpdateCat(ctx, in)
+		return srv.(CollectionRpcServer).UpdateCat(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cat.CatRpc/UpdateCat",
+		FullMethod: "/cat.collection_rpc/UpdateCat",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CatRpcServer).UpdateCat(ctx, req.(*UpdateCatReq))
+		return srv.(CollectionRpcServer).UpdateCat(ctx, req.(*UpdateCatReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CatRpc_DeleteCat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CollectionRpc_DeleteCat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteCatReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CatRpcServer).DeleteCat(ctx, in)
+		return srv.(CollectionRpcServer).DeleteCat(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cat.CatRpc/DeleteCat",
+		FullMethod: "/cat.collection_rpc/DeleteCat",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CatRpcServer).DeleteCat(ctx, req.(*DeleteCatReq))
+		return srv.(CollectionRpcServer).DeleteCat(ctx, req.(*DeleteCatReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// CatRpc_ServiceDesc is the grpc.ServiceDesc for CatRpc service.
+// CollectionRpc_ServiceDesc is the grpc.ServiceDesc for CollectionRpc service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var CatRpc_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "cat.CatRpc",
-	HandlerType: (*CatRpcServer)(nil),
+var CollectionRpc_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "cat.collection_rpc",
+	HandlerType: (*CollectionRpcServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetManyCat",
-			Handler:    _CatRpc_GetManyCat_Handler,
+			MethodName: "ListCat",
+			Handler:    _CollectionRpc_ListCat_Handler,
 		},
 		{
-			MethodName: "GetCat",
-			Handler:    _CatRpc_GetCat_Handler,
+			MethodName: "RetrieveCat",
+			Handler:    _CollectionRpc_RetrieveCat_Handler,
 		},
 		{
-			MethodName: "AddCat",
-			Handler:    _CatRpc_AddCat_Handler,
+			MethodName: "CreateCat",
+			Handler:    _CollectionRpc_CreateCat_Handler,
 		},
 		{
 			MethodName: "UpdateCat",
-			Handler:    _CatRpc_UpdateCat_Handler,
+			Handler:    _CollectionRpc_UpdateCat_Handler,
 		},
 		{
 			MethodName: "DeleteCat",
-			Handler:    _CatRpc_DeleteCat_Handler,
+			Handler:    _CollectionRpc_DeleteCat_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

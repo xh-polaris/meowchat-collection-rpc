@@ -2,7 +2,7 @@ package svc
 
 import (
 	"github.com/xh-polaris/meowchat-collection-rpc/internal/config"
-	"github.com/xh-polaris/meowchat-collection-rpc/model"
+	"github.com/xh-polaris/meowchat-collection-rpc/internal/model"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 

@@ -11,8 +11,7 @@ import (
 )
 
 var (
-	_                                           CatModel = (*customCatModel)(nil)
-	cacheMeowchatCollectionRpcCommunityIdPrefix          = "cache:meowchatCollectionRpc:cat:CommunityId:"
+	_ CatModel = (*customCatModel)(nil)
 )
 
 type (
@@ -20,9 +19,9 @@ type (
 	// and implement the added methods in customCatModel.
 	CatModel interface {
 		catModel
-		DeleteNotDelete(ctx context.Context, id int64) error
-		FindOneNotDelete(ctx context.Context, id int64) (*Cat, error)
-		FindManyByCommunityIdNotDelete(ctx context.Context, CommunityId string, skip int64, count int64) ([]*Cat, error)
+		DeleteSoftly(ctx context.Context, id int64) error
+		FindOneValid(ctx context.Context, id int64) (*Cat, error)
+		FindManyValidByCommunityIdValid(ctx context.Context, CommunityId string, skip int64, count int64) ([]*Cat, error)
 	}
 
 	customCatModel struct {
@@ -37,20 +36,20 @@ func NewCatModel(conn sqlx.SqlConn, c cache.CacheConf) CatModel {
 	}
 }
 
-func (m *defaultCatModel) DeleteNotDelete(ctx context.Context, id int64) error {
+func (m *defaultCatModel) DeleteSoftly(ctx context.Context, id int64) error {
 	meowchatCollectionRpcCatIdKey := fmt.Sprintf("%s%v", cacheMeowchatCollectionRpcCatIdPrefix, id)
 	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("update %s set is_delete= '1' , delete_at =? where `id` = ?", m.table)
+		query := fmt.Sprintf("update %s set `is_delete` = true, `delete_at` = ? where `id` = ?", m.table)
 		return conn.ExecCtx(ctx, query, time.Now(), id)
 	}, meowchatCollectionRpcCatIdKey)
 	return err
 }
 
-func (m *defaultCatModel) FindOneNotDelete(ctx context.Context, id int64) (*Cat, error) {
+func (m *defaultCatModel) FindOneValid(ctx context.Context, id int64) (*Cat, error) {
 	meowchatCollectionRpcCatIdKey := fmt.Sprintf("%s%v", cacheMeowchatCollectionRpcCatIdPrefix, id)
 	var resp Cat
 	err := m.QueryRowCtx(ctx, &resp, meowchatCollectionRpcCatIdKey, func(ctx context.Context, conn sqlx.SqlConn, v interface{}) error {
-		query := fmt.Sprintf("select %s from %s where `id` = ? and is_delete=0 limit 1", catRows, m.table)
+		query := fmt.Sprintf("select %s from %s where `id` = ? and `is_delete` = false limit 1", catRows, m.table)
 		return conn.QueryRowCtx(ctx, v, query, id)
 	})
 	switch err {
@@ -63,9 +62,9 @@ func (m *defaultCatModel) FindOneNotDelete(ctx context.Context, id int64) (*Cat,
 	}
 }
 
-func (m *defaultCatModel) FindManyByCommunityIdNotDelete(ctx context.Context, CommunityId string, skip int64, count int64) ([]*Cat, error) {
+func (m *defaultCatModel) FindManyValidByCommunityIdValid(ctx context.Context, CommunityId string, skip int64, count int64) ([]*Cat, error) {
 	var resp []*Cat
-	query := fmt.Sprintf("select %s from %s where  community_id = ? and is_delete=0 limit ?,?", catRows, m.table)
+	query := fmt.Sprintf("select %s from %s where `community_id` = ? and `is_delete` = 0 limit ?,?", catRows, m.table)
 	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, CommunityId, skip, count)
 	switch err {
 	case nil:
